@@ -25,7 +25,7 @@ Como root no wsl criar o arquivo e conteúdo abaixo.
 
 sudo vim /etc/vbox/networks.conf
 ~~~~
- 0.0.0.0/0 ::/0
+ * 0.0.0.0/0 ::/0
 ~~~~
 
 ### Problemas para acesso ao ssh após o processo dar sucesso
@@ -37,7 +37,7 @@ sudo vim /etc/vbox/networks.conf
 [automount]
 options="metadata"
 ~~~~
-3.Ajustar permissão das pastas .ssh do seu diretorio home
+3.Ajustar permissão das pastas ./ssh do seu diretorio home
 ~~~~
 chmod -R 700
 ~~~~
