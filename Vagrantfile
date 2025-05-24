@@ -3,9 +3,9 @@
 
 machines = {
   "master"   => {"memory" => "2048", "cpu" => "2", "ip" => "100", "image" => "rockylinux/9"},
-  "node01"   => {"memory" => "1024", "cpu" => "2", "ip" => "110", "image" => "rockylinux/9"},
-  "node02"   => {"memory" => "1024", "cpu" => "2", "ip" => "120", "image" => "rockylinux/9"},
-  "registry" => {"memory" => "2048", "cpu" => "2", "ip" => "200", "image" => "rockylinux/9"}
+  #"node01"   => {"memory" => "1024", "cpu" => "2", "ip" => "110", "image" => "rockylinux/9"},
+  #"node02"   => {"memory" => "1024", "cpu" => "2", "ip" => "120", "image" => "rockylinux/9"},
+  #"registry" => {"memory" => "2048", "cpu" => "2", "ip" => "200", "image" => "rockylinux/9"}
 }
 
 Vagrant.configure("2") do |config|
