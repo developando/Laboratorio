@@ -14,10 +14,10 @@ cat /root/.ssh/id_rsa.pub >> /home/vagrant/.ssh/authorized_keys
 echo "Garantindo os hosts"
 HOSTS=$(head -n7 /etc/hosts)
 echo -e "$HOSTS" > /etc/hosts
-echo '192.168.1.100 master.docker-dca.example' >> /etc/hosts
-echo '192.168.1.110 node01.docker-dca.example' >> /etc/hosts
-echo '192.168.1.120 node02.docker-dca.example'>> /etc/hosts
-echo '192.168.1.200 registry.docker-dca.example' >> /etc/hosts
+echo '192.168.1.101 python01.docker-dca.example' >> /etc/hosts
+#echo '192.168.1.110 node01.docker-dca.example' >> /etc/hosts
+#echo '192.168.1.120 node02.docker-dca.example'>> /etc/hosts
+#echo '192.168.1.200 registry.docker-dca.example' >> /etc/hosts
 
 echo "Instalando o Docker"
 sudo dnf install -y dnf-utils -y >/dev/null 2>&1
@@ -32,6 +32,9 @@ echo "Testando o Docker"
 docker pull crccheck/hello-world >/dev/null 2>&1
 docker run -d --name web-test -p 80:8000 crccheck/hello-world >/dev/null 2>&1
 curl 127.0.0.1:80
+
+echo "Instalando o conversor de arquivos"
+yum install -y dos2unix 
 
 
 
