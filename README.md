@@ -41,3 +41,33 @@ options="metadata"
 ~~~~
 chmod -R 700
 ~~~~
+
+
+# informações adicionais
+
+Instalação de plugins (opcional):
+- `vagrant plugin install vagrant-vbguest`
+- `vagrant plugin list`
+
+Sincronização de pastas — usando **rsync** (recomendado no Windows)
+- O `Vagrantfile` foi configurado para usar `rsync`:
+  `machine.vm.synced_folder "C:/Users/welli/Documents", "/data", type: "rsync", rsync__auto: true`
+- Comandos úteis:
+  - `vagrant up` (faz sync inicial)
+  - `vagrant rsync` (sincroniza manualmente)
+  - `vagrant rsync-auto` (observa alterações e sincroniza automaticamente)
+- Observações:
+  - `rsync` é *one-way* (host → guest); alterações no guest NÃO voltam ao host automaticamente.
+  - No Windows, tenha um binário `rsync` no PATH (usar WSL: `sudo apt install rsync`, Git Bash ou cwRsync).
+
+Alternativa: usar **vboxsf** (VirtualBox shared folders)
+- Requer **Guest Additions** instaladas no guest.
+- Plugin útil: `vagrant-vbguest` (tenta instalar as Guest Additions automaticamente):
+  - `vagrant plugin install vagrant-vbguest`
+- Se o plugin falhar com erro Ruby `File.exists?`, use uma versão anterior estável ou aplique o _workaround_:
+  - Downgrade para 0.31.0:
+    - `vagrant plugin uninstall vagrant-vbguest`
+    - `vagrant plugin install vagrant-vbguest --plugin-version "0.31.0"`
+  - Ou edite o arquivo indicado substituindo `File.exists?` por `File.exist?` para corrigir rapidamente.
+
+Se quiser, eu adiciono instruções para instalar `rsync` no seu Windows (WSL ou cwRsync) ou um snippet para automatizar a instalação de `kernel-devel` e Guest Additions no `provision.sh`.

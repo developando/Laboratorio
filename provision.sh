@@ -19,6 +19,11 @@ echo '192.168.1.110 node01.docker-dca.example' >> /etc/hosts
 echo '192.168.1.120 node02.docker-dca.example'>> /etc/hosts
 echo '192.168.1.200 registry.docker-dca.example' >> /etc/hosts
 
+echo "Atualizando para a instalação do plugins(drivers)"
+#sudo dnf update
+#sudo dnf install -y kernel-headers kernel-devel gcc make perl bzip2 dkms elfutils-libelf-devel
+
+<<"DOCKER INSTALL"
 echo "Instalando o Docker"
 sudo dnf install -y dnf-utils -y >/dev/null 2>&1
 sudo dnf config-manager --add-repo https://download.docker.com/linux/rhel/docker-ce.repo -y >/dev/null 2>&1
@@ -32,7 +37,7 @@ echo "Testando o Docker"
 docker pull crccheck/hello-world >/dev/null 2>&1
 docker run -d --name web-test -p 80:8000 crccheck/hello-world >/dev/null 2>&1
 curl 127.0.0.1:80
-
+DOCKER INSTALL>>>
 
 
 
