@@ -2,10 +2,10 @@
 # vi: set ft=ruby  :
 
 machines = {
-  "python"   => {"memory" => "2048", "cpu" => "2", "ip" => "100", "image" => "generic/centos8"},
-  #"python2"   => {"memory" => "1024", "cpu" => "2", "ip" => "110", "image" => "bento/centos-8"},
-  #"node02"   => {"memory" => "1024", "cpu" => "2", "ip" => "120", "image" => "rockylinux/9"},
-  #"registry" => {"memory" => "2048", "cpu" => "2", "ip" => "200", "image" => "rockylinux/9"}
+  "master"   => {"memory" => "2048", "cpu" => "2", "ip" => "100", "image" => "cloud-image/ubuntu-24.04"},
+  "node01"   => {"memory" => "1024", "cpu" => "2", "ip" => "110", "image" => "cloud-image/ubuntu-24.04"},
+  "node02"   => {"memory" => "1024", "cpu" => "2", "ip" => "120", "image" => "generic/centos8"},
+  "registry" => {"memory" => "2048", "cpu" => "2", "ip" => "200", "image" => "cloud-image/ubuntu-24.04"}
 }
 
 Vagrant.configure("2") do |config|
@@ -16,11 +16,12 @@ Vagrant.configure("2") do |config|
       machine.vm.hostname = "#{name}.docker-dca.example"
       machine.vm.network "private_network", ip: "192.168.1.#{conf["ip"]}"
       machine.vm.synced_folder "C:/Users/welli/Documents", "/tmp/lala"
+      machine.vm.synced_folder "./", "/vagrant"
       machine.vm.provider "virtualbox" do |vb|
         vb.name = "#{name}"
         vb.memory = conf["memory"]
         vb.cpus = conf["cpu"]
-        vb.customize ["modifyvm", :id, "--groups", "/Programing"]
+        vb.customize ["modifyvm", :id, "--groups", "/DCA"]
         vb.customize [ "modifyvm", :id, "--uartmode1", "disconnected" ]
         vb.gui = true
       end

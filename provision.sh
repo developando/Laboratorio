@@ -1,23 +1,40 @@
 # Garantindo as chaves
 #  ssh-keygen -q -t rsa -f key -N ''
 
-KEY_PATH='/vagrant/'
-cd $KEY_PATH
-mkdir -p /root/.ssh
-cp $KEY_PATH/key /root/.ssh/id_rsa
-cp $KEY_PATH/key.pub /root/.ssh/id_rsa.pub
-cp $KEY_PATH/key.pub /root/.ssh/authorized_keys
-chmod 400 /root/.ssh/id_rsa*
-cat /root/.ssh/id_rsa.pub >> /home/vagrant/.ssh/authorized_keys
+#!/bin/bash
+set -e
+
+KEY_PATH='/vagrant'
+if [ -d "$KEY_PATH" ]; then
+	cd "$KEY_PATH"
+	mkdir -p /root/.ssh /home/vagrant/.ssh
+	if [ -f key ]; then
+		cp key /root/.ssh/id_rsa
+	fi
+	if [ -f key.pub ]; then
+		cp key.pub /root/.ssh/id_rsa.pub
+		cp key.pub /root/.ssh/authorized_keys
+	fi
+else
+	echo "/vagrant não encontrado — gerando chave temporária"
+	mkdir -p /root/.ssh /home/vagrant/.ssh
+	ssh-keygen -q -t rsa -f /tmp/vagrant_key -N '' >/dev/null 2>&1 || true
+	cp /tmp/vagrant_key /root/.ssh/id_rsa || true
+	cp /tmp/vagrant_key.pub /root/.ssh/id_rsa.pub || true
+	cp /tmp/vagrant_key.pub /root/.ssh/authorized_keys || true
+fi
+
+chmod 400 /root/.ssh/id_rsa* || true
+cat /root/.ssh/id_rsa.pub >> /home/vagrant/.ssh/authorized_keys || true
 
 
 echo "Garantindo os hosts"
 HOSTS=$(head -n7 /etc/hosts)
 echo -e "$HOSTS" > /etc/hosts
-echo '192.168.1.101 python01.docker-dca.example' >> /etc/hosts
-#echo '192.168.1.110 node01.docker-dca.example' >> /etc/hosts
-#echo '192.168.1.120 node02.docker-dca.example'>> /etc/hosts
-#echo '192.168.1.200 registry.docker-dca.example' >> /etc/hosts
+echo '192.168.1.101 master.docker-dca.example' >> /etc/hosts
+echo '192.168.1.110 node01.docker-dca.example' >> /etc/hosts
+echo '192.168.1.120 node02.docker-dca.example'>> /etc/hosts
+echo '192.168.1.200 registry.docker-dca.example' >> /etc/hosts
 
 echo "Atualizando para a instalação do plugins(drivers)"
 #sudo dnf update
@@ -38,11 +55,12 @@ docker pull crccheck/hello-world >/dev/null 2>&1
 docker run -d --name web-test -p 80:8000 crccheck/hello-world >/dev/null 2>&1
 curl 127.0.0.1:80
 
-DOCKER INSTALL
 
 echo "Instalando o conversor de arquivos"
 yum install -y dos2unix 
 
+
+DOCKER INSTALL
 
 
 

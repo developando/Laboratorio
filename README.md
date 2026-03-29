@@ -1,8 +1,19 @@
-# 🚀 Título do Projeto
+# 🚀 Vagrant o Centos Shared
 
-> Breve descrição cativante sobre o que é o seu projeto.
+> Sempre que inicio meus estudos tenho dificuldades para subir um laboratorio de estudos no qual eu possa instalar rapidamente sem me preocupar em baixar a imagem do SO e ficar um tempo só para configurar o ambiente.
+> Este projeto tem o objetivo de solucionar esta questão onde apenas usando 2 softwares conseguimos ter um ambiente leve e com todas as ferramentas necessárias para os estudos e em caso de uma reinstalação o processo continua sendo facil.
 
-![Badge de Status](https://img.shields.io)
+instalar plugin para compartilhar pasta:
+vagrant plugin install vagrant-vbguest --plugin-version 0.32.0
+
+
+
+usar imagem cloud que sao mais leves, normalmente usadas em nuvem... já com cloud-init
+https://portal.cloud.hashicorp.com/vagrant/discover/cloud-image/centos-8
+
+
+![Static Badge](https://img.shields.io/badge/Build-Progress-green?style=for-the-badge)
+
 
 ## 📸 Demonstração
 ![GIF de Funcionamento](./caminho/para/demo.gif)
